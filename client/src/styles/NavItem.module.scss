@@ -1,0 +1,13 @@
+.item {
+  margin-left: 10px;
+  border: 1px solid white;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 20px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: white;
+    color: black;
+  }
+}

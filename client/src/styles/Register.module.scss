@@ -1,0 +1,5 @@
+@use "globals.scss" as globals;
+
+.container {
+  @include globals.container(200px, 400px);
+}

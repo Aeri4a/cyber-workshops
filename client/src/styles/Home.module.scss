@@ -1,0 +1,17 @@
+@use "globals.scss" as globals;
+
+.container {
+  @include globals.container(1000px, 400px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+h1 {
+  font-size: 60px;
+}
+
+p {
+  font-size: 30px;
+}

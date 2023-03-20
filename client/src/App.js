@@ -4,6 +4,8 @@ import "./styles/App.scss";
 import NavBar from "./components/NavBar";
 import Home from "./components/Home";
 import Register from "./components/Register";
+import Login from "./components/Login";
+import Profile from "./components/Profile";
 
 function App() {
   return (
@@ -11,6 +13,8 @@ function App() {
       <Router>
         <NavBar />
         <Routes>
+          <Route path="/profile" element={<Profile />}></Route>
+          <Route path="/login" element={<Login />}></Route>
           <Route path="/signup" element={<Register />}></Route>
           <Route path="/home" element={<Home />}></Route>
           <Route path="/" element={<Home />}></Route>

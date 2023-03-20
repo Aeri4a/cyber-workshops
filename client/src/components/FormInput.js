@@ -3,7 +3,7 @@ import styles from "../styles/Forms.module.scss";
 
 function FormInput(props) {
   const [focused, setFocused] = useState(false);
-  const { label, errorMessage, onChange, id, ...inputProps } = props;
+  const { label, errorMessage, onChange, id, focusMode, ...inputProps } = props;
 
   return (
     <div className={styles.formInput}>
@@ -15,7 +15,7 @@ function FormInput(props) {
         onFocus={() =>
           inputProps.name === "confirmPassword" && setFocused(true)
         }
-        focused={focused.toString()}
+        focused={focusMode && focused.toString()}
       />
       <span>{errorMessage}</span>
     </div>

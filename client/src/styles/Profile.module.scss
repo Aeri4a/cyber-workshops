@@ -1,0 +1,23 @@
+@use "globals.scss" as globals;
+
+.container {
+  @include globals.container(1000px, 450px);
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 50px;
+}
+
+.header {
+  margin: 0;
+  height: 60px;
+  text-align: left;
+  width: 100%;
+  border-bottom: 2px solid black;
+}
+
+.tile {
+  flex: 1;
+  width: 45%;
+  height: 300px;
+}

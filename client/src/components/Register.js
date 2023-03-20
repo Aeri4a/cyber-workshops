@@ -51,7 +51,6 @@ function Register() {
 
   const onChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
-    console.log(values);
   };
 
   return (
@@ -64,6 +63,7 @@ function Register() {
               <FormInput
                 key={input.id}
                 {...input}
+                focusMode={true}
                 value={values[input.name]}
                 onChange={onChange}
               />

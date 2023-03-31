@@ -6,18 +6,21 @@ const checkUniqueUsername = async (req, res, next) => {
     // Username
     let username = await User.findOne({
       where: {
-        login: req.body.login,
+        username: req.body.username,
       },
     });
 
     if (username) {
-      return res.status(400).send({ message: "Failed! Username exists!" });
+      return res
+        .status(400)
+        .send({ message: "Failed! Username exists!", code: 0 });
     }
 
     next();
   } catch (error) {
     return res.status(500).send({
       message: error.message,
+      code: 0,
     });
   }
 };

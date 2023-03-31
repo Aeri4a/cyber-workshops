@@ -14,12 +14,12 @@ const User = db.user;
 exports.register = async (req, res) => {
   try {
     const user = await User.create({
-      login: req.body.login,
+      username: req.body.username,
       password: req.body.password,
     });
-    res.send({ message: "Register successfull." });
+    res.send({ message: "Register successfull.", code: 1 });
   } catch (error) {
-    res.status(500).send({ message: error.message });
+    res.status(500).send({ message: error.message, code: 0 });
   }
 };
 
@@ -28,7 +28,7 @@ exports.login = async (req, res) => {
   try {
     const user = await User.findOne({
       where: {
-        login: req.body.login,
+        username: req.body.username,
       },
     });
 
@@ -46,7 +46,7 @@ exports.login = async (req, res) => {
 
     res.status(200).send({
       id: user.id,
-      login: user.login,
+      username: user.username,
       accessToken: token,
     });
   } catch (error) {

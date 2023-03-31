@@ -57,7 +57,7 @@ function Login() {
             );
           })}
         </div>
-        <button>Login</button>
+        <button className={styles.button}>Login</button>
       </form>
       <ToastContainer
         position="top-center"

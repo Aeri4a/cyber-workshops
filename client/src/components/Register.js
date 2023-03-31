@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import styles from "../styles/Forms.module.scss";
 import FormInput from "./FormInput";
 
@@ -6,7 +7,12 @@ import FormInput from "./FormInput";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+//Service
+import AuthService from "../services/auth.service";
+
 function Register() {
+  const navigate = useNavigate();
+  const [info, setInfo] = useState("");
   const [values, setValues] = useState({
     username: "",
     password: "",
@@ -47,11 +53,29 @@ function Register() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    AuthService.register(values.username, values.password)
+      .then((response) => {
+        setInfo(response.data);
+      })
+      .catch((error) => {
+        setInfo(error.response.data);
+      });
   };
 
   const onChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
+
+  //Provide results for user
+  useEffect(() => {
+    if (info.code) {
+      toast.success(info.message);
+      toast.success("Redirecting to login page...");
+      setTimeout(() => {
+        navigate("/login");
+      }, 6000);
+    } else toast.error(info.message);
+  }, [info]);
 
   return (
     <div className={styles.container}>
@@ -70,11 +94,11 @@ function Register() {
             );
           })}
         </div>
-        <button>Register</button>
+        <button className={styles.button}>Register</button>
       </form>
       <ToastContainer
         position="top-center"
-        autoClose={8000}
+        autoClose={5500}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick

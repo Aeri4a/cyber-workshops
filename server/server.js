@@ -23,7 +23,7 @@ const db = require("./models");
 db.sequelize.sync();
 
 //Routes
-require("./routes/user.routes")(app);
+require("./routes/auth.routes")(app);
 
 //Default path
 app.get("/", (req, res) => {

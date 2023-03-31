@@ -1,11 +1,12 @@
 @use "globals.scss" as globals;
 
 .container {
-  @include globals.container(1000px, 400px);
+  @include globals.container(1000px, 450px);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 30px;
 }
 
 h1 {

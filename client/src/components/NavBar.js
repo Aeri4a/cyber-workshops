@@ -3,8 +3,17 @@ import { Link } from "react-router-dom";
 import styles from "../styles/NavBar.module.scss";
 import NavItem from "./NavItem";
 
+//Service
+import AuthService from "../services/auth.service";
+
 function NavBar() {
-  const [activeuser, setActiveuser] = useState(false);
+  const currentUser = AuthService.checkUserToken();
+  const [activeuser, setActiveuser] = useState(Boolean(currentUser));
+
+  const logout = () => {
+    AuthService.logout();
+    window.location.reload();
+  };
 
   return (
     <nav className={styles.container}>
@@ -17,7 +26,9 @@ function NavBar() {
             <Link to="/profile">
               <NavItem content="Profile" />
             </Link>
-            <NavItem content="Logout" />
+            <div onClick={logout}>
+              <NavItem content="Logout" />
+            </div>
           </>
         ) : (
           <>

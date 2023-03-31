@@ -32,12 +32,13 @@ exports.login = async (req, res) => {
       },
     });
 
-    if (!user) return res.status(404).send({ message: "User not found." });
+    if (!user)
+      return res.status(404).send({ message: "User not found.", code: 0 });
 
     if (req.body.password != user.password)
       return res
         .status(401)
-        .send({ accessToken: null, message: "Invalid password!" });
+        .send({ accessToken: null, message: "Invalid password!", code: 0 });
 
     //Generate Token if login ok
     var token = jwt.sign({ id: user.id }, config.secret, {
@@ -48,8 +49,9 @@ exports.login = async (req, res) => {
       id: user.id,
       username: user.username,
       accessToken: token,
+      code: 1,
     });
   } catch (error) {
-    res.status(500).send({ message: error.message });
+    res.status(500).send({ message: error.message, code: 0 });
   }
 };

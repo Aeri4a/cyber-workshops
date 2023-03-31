@@ -51,6 +51,10 @@ function Register() {
     },
   ];
 
+  const onChange = (e) => {
+    setValues({ ...values, [e.target.name]: e.target.value });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     AuthService.register(values.username, values.password)
@@ -60,10 +64,6 @@ function Register() {
       .catch((error) => {
         setInfo(error.response.data);
       });
-  };
-
-  const onChange = (e) => {
-    setValues({ ...values, [e.target.name]: e.target.value });
   };
 
   //Provide results for user

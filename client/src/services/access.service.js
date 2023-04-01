@@ -1,4 +1,5 @@
 import axios from "axios";
+import authHeader from "./auth-header";
 
 const URL = "http://localhost:3001/api/access/";
 
@@ -7,12 +8,8 @@ class AccessService {
     return axios.get(`${URL}all`);
   }
 
-  async getUserContent() {
-    return axios.get(`${URL}user`, {
-      headers: {
-        "x-access-token": localStorage.getItem("userData"),
-      },
-    });
+  getUserContent() {
+    return axios.get(`${URL}user`, { headers: authHeader() });
   }
 }
 

@@ -4,21 +4,21 @@ import styles from "../styles/Profile.module.scss";
 
 //Service
 import AuthService from "../services/auth.service";
+import AccessService from "../services/access.service";
 
 function Profile() {
-  const currentUser = AuthService.checkUserToken();
+  const isLogin = AccessService.getUserContent();
+  console.log(isLogin);
 
-  if (!currentUser) return <Navigate to="/login" />;
+  if (!isLogin) return <Navigate to="/login" />;
   else {
     return (
       <div className={styles.container}>
         <h2 className={styles.header}>Profile</h2>
         <div className={styles.tile}>
-          <p className={styles.paragh}>Id: {currentUser.id}</p>
-          <p className={styles.paragh}>Username: {currentUser.username}</p>
-          <p className={styles.paragh}>
-            Token: {currentUser.accessToken.slice(0, 20)}
-          </p>
+          <p className={styles.paragh}>Id: {isLogin.userId}</p>
+          <p className={styles.paragh}>Username: {isLogin.userName}</p>
+          <p className={styles.paragh}>Token: -</p>
         </div>
         <div className={styles.tile}>
           <p className={styles.paragh}>(TwoStepAuth)</p>

@@ -24,6 +24,7 @@ db.sequelize.sync();
 
 //Routes
 require("./routes/auth.routes")(app);
+require("./routes/access.routes")(app);
 
 //Default path
 app.get("/", (req, res) => {

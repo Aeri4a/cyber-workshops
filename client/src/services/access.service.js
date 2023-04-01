@@ -7,8 +7,12 @@ class AccessService {
     return axios.get(`${URL}all`);
   }
 
-  getUserContent() {
-    return axios.get(`${URL}user`);
+  async getUserContent() {
+    return axios.get(`${URL}user`, {
+      headers: {
+        "x-access-token": localStorage.getItem("userData"),
+      },
+    });
   }
 }
 

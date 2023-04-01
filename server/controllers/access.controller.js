@@ -3,5 +3,5 @@ exports.allAccess = (req, res) => {
 };
 
 exports.userProfile = (req, res) => {
-  res.status(200).send("User content.");
+  res.status(200).send({ userId: req.id, userName: req.username });
 };

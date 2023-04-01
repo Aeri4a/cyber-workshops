@@ -49,7 +49,10 @@ function Login() {
         setInfo(response.data);
       })
       .catch((error) => {
-        setInfo(error.response.data);
+        if (error.response?.data) setInfo(error.response.data);
+        else setInfo({ message: error.message, code: 0 });
+
+        console.log(info);
       });
   };
 

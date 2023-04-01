@@ -41,13 +41,15 @@ exports.login = async (req, res) => {
         .send({ accessToken: null, message: "Invalid password!", code: 0 });
 
     //Generate Token if login ok
-    var token = jwt.sign({ id: user.id }, config.secret, {
-      expiresIn: 300, // 5 min
-    });
+    const token = jwt.sign(
+      { id: user.id, username: user.username },
+      config.secret,
+      {
+        expiresIn: 60, // 5 min
+      }
+    );
 
     res.status(200).send({
-      id: user.id,
-      username: user.username,
       accessToken: token,
       code: 1,
     });

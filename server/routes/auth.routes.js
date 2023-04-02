@@ -7,11 +7,15 @@ module.exports = function (app) {
     next();
   });
 
+  //Login, Register
   app.post(
     "/api/auth/register",
     checkRegister.checkUniqueUsername,
     controller.register
   );
-
   app.post("/api/auth/login", controller.login);
+
+  //OTP
+  app.post("/api/otp/generate", controller.otpGenerate);
+  app.post("/api/otp/verify", controller.otpVerify);
 };

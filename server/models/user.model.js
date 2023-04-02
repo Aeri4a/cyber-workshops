@@ -16,7 +16,19 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.BOOLEAN,
       defaultValue: 0,
     },
-    twoStepKey: {
+    twoStepAscii: {
+      type: Sequelize.STRING,
+      defaultValue: "",
+    },
+    twoStepHex: {
+      type: Sequelize.STRING,
+      defaultValue: "",
+    },
+    twoStepBase32: {
+      type: Sequelize.STRING,
+      defaultValue: "",
+    },
+    twoStepURL: {
       type: Sequelize.STRING,
       defaultValue: "",
     },

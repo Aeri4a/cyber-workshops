@@ -10,8 +10,8 @@ const verifyToken = async (req, res, next) => {
     const veryfy = await jwt.verify(token, config.secret, (err, decoded) => {
       if (err) return res.status(401).send({ message: "Unathorized!" });
 
-      req.id = decoded.id;
-      req.username = decoded.username;
+      req.userId = decoded.id;
+      req.userName = decoded.username;
       next();
     });
   } catch (error) {

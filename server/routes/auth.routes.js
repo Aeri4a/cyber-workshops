@@ -1,5 +1,5 @@
 const controller = require("../controllers/auth.controller");
-const { checkRegister } = require("../middleware");
+const { checkRegister, authJwt } = require("../middleware");
 
 module.exports = function (app) {
   app.use(function (req, res, next) {
@@ -16,6 +16,8 @@ module.exports = function (app) {
   app.post("/api/auth/login", controller.login);
 
   //OTP
-  app.post("/api/otp/generate", controller.otpGenerate);
-  app.post("/api/otp/verify", controller.otpVerify);
+  app.post("/api/otp/generate", authJwt.verifyToken, controller.otpGenerate);
+  app.post("/api/otp/verify", authJwt.verifyToken, controller.otpVerify);
+  app.post("/api/otp/validate", authJwt.verifyToken, controller.otpValidate);
+  app.post("/api/otp/disable", authJwt.verifyToken, controller.otpDisable);
 };

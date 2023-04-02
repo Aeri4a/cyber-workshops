@@ -62,10 +62,10 @@ exports.login = async (req, res) => {
 };
 
 //-=TWO STEP AUTHENTICATION=-
-//Generate OTP Token
+//Generate OTP
 exports.otpGenerate = async (req, res) => {
   try {
-    const { userId, userName } = req.body;
+    const { userId, userName } = req;
     const { ascii, hex, base32, otpauth_url } = speakeasy.generateSecret({
       issuer: "Cybero",
       name: userName,
@@ -95,9 +95,11 @@ exports.otpGenerate = async (req, res) => {
   }
 };
 
+//Verify OTP
 exports.otpVerify = async (req, res) => {
   try {
-    const { userId, userName, token } = req.body;
+    const { userId, userName } = req;
+    const { token } = req.body;
 
     const user = await User.findOne({
       where: {
@@ -114,12 +116,62 @@ exports.otpVerify = async (req, res) => {
       token,
     });
 
-    if (!verified) return res.status(401).send("Fail.");
-    console.log("Test");
-    user.twoStepStatus = 0;
+    if (!verified) return res.status(401).send({ message: "Fail." });
+
+    user.twoStepStatus = 1;
     await user.save();
-    res.status(200).send({ message: "Success" });
+    res.status(200).send({ otpVerified: true });
   } catch (error) {
     res.status(500).send({ message: error.message });
+  }
+};
+
+//Validate OTP
+exports.otpValidate = async (req, res) => {
+  try {
+    const { userId, userName } = req;
+    const { token } = req.body;
+
+    const user = await User.findOne({
+      where: {
+        id: userId,
+        username: userName,
+      },
+    });
+
+    if (!user) return res.status(401).send({ message: "Not found!" });
+
+    const verified = speakeasy.totp.verify({
+      secret: user.twoStepBase32,
+      encoding: "base32",
+      token,
+    });
+
+    if (!verified) return res.status(401).send({ message: "Fail." });
+
+    res.status(200).send({ otpValid: true });
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
+};
+
+exports.otpDisable = async (req, res) => {
+  try {
+    const { userId, userName } = req;
+
+    const user = await User.findOne({
+      where: {
+        id: userId,
+        username: userName,
+      },
+    });
+
+    if (!user) return res.status(401).send({ message: "Not found!" });
+
+    user.twoStepStatus = 0;
+    await user.save();
+    res.status(200).send({ otpDisabled: true });
+  } catch (error) {
+    res.sent(500).send({ message: error.message });
   }
 };

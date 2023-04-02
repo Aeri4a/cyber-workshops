@@ -36,7 +36,7 @@ function NavBar() {
               <NavItem content="Login" />
             </Link>
             <Link to="/signup">
-              <NavItem content="Signup" />
+              <NavItem content="Register" />
             </Link>
           </>
         )}

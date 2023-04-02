@@ -48,7 +48,7 @@ exports.login = async (req, res) => {
       { id: user.id, username: user.username },
       config.secret,
       {
-        expiresIn: 60, // 1 min
+        expiresIn: 600, // 10 min
       }
     );
 

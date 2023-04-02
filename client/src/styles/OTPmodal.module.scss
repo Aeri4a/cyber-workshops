@@ -1,0 +1,91 @@
+@use "globals.scss" as globals;
+
+.background {
+  position: fixed;
+  background-color: rgba(39, 39, 39, 0.616);
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.window {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  font-size: 40px;
+  background-color: white;
+  width: 600px;
+  height: 700px;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.line {
+  width: 550px;
+}
+
+.header {
+  font-size: 40px;
+  margin: 10px;
+}
+
+.parag {
+  font-size: 25px;
+  margin: 10px;
+}
+
+.qrcode {
+  width: 200px;
+  height: 200px;
+}
+
+.key {
+  width: 500px;
+  background-color: rgb(228, 228, 228);
+  box-shadow: inset 1px 1px 4px rgba(0, 0, 0, 0.233);
+  padding: 10px;
+  font-size: 25px;
+}
+
+.buttonBox {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: center;
+  width: 80%;
+  height: 100%;
+}
+
+.button {
+  cursor: pointer;
+  width: 200px;
+  height: 50px;
+  margin: 20px;
+  border: 0;
+  border-radius: 5px;
+  color: white;
+  background-color: #2cb3cb;
+  font-size: 30px;
+  cursor: pointer;
+  font-family: "Quicksand", sans-serif;
+  font-weight: 600;
+
+  &:hover {
+    background-color: #24a1b7;
+    transition: 0.3s;
+  }
+}
+
+.input {
+  text-align: center;
+  width: 30%;
+  height: 40px;
+  margin: 5px 0 5px 0;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid gray;
+  font-size: 25px;
+}

@@ -22,8 +22,8 @@ function Profile() {
   const [genotp, setGenotp] = useState();
 
   //TODO - Rebuild functions, not reload page
-  const generateOTP = async () => {
-    await OTPService.generate()
+  const generateOTP = () => {
+    OTPService.generate()
       .then((response) => {
         setGenotp(response.data);
       })
@@ -35,8 +35,8 @@ function Profile() {
       QRCode.toDataURL(genotp.otpauth_url).then((data) => {
         setGenotp({ ...genotp, qrcode: data });
       });
-      setModal(1);
     }
+    setModal(1);
   };
 
   const tokenInput = (e) => {

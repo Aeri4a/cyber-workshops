@@ -88,4 +88,9 @@
   border-radius: 5px;
   border: 1px solid gray;
   font-size: 25px;
+
+  &::placeholder {
+    font-size: 15px;
+    text-transform: uppercase;
+  }
 }

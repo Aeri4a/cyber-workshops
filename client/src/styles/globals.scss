@@ -1,6 +1,6 @@
-@mixin container($width, $height) {
+@mixin container($width) {
   width: $width;
-  height: $height;
+  //height: $height;
   background-color: #ebebeb;
   margin-top: 50px;
   padding: 20px;

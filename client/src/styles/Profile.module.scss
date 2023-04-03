@@ -1,7 +1,7 @@
 @use "globals.scss" as globals;
 
 .container {
-  @include globals.container(1000px, 450px);
+  @include globals.container(1000px);
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;

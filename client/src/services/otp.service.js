@@ -4,6 +4,17 @@ import authHeader from "./auth-header";
 const URL = "http://localhost:3001/api/otp/";
 
 class OTPService {
+  validate(tokenValue, username) {
+    return axios
+      .post(`${URL}validate`, { token: tokenValue, userName: username })
+      .then((response) => {
+        if (response.data.accessToken)
+          localStorage.setItem("userData", JSON.stringify(response.data));
+
+        return response;
+      });
+  }
+
   generate() {
     return axios.post(`${URL}generate`, {}, { headers: authHeader() });
   }

@@ -47,7 +47,7 @@ function Profile() {
 
           setTimeout(() => {
             setGenotp({ ...genotp, modal: 0 });
-          }, 2000);
+          }, 1500);
 
           getData();
         }

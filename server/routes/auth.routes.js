@@ -18,6 +18,6 @@ module.exports = function (app) {
   //OTP
   app.post("/api/otp/generate", authJwt.verifyToken, controller.otpGenerate);
   app.post("/api/otp/verify", authJwt.verifyToken, controller.otpVerify);
-  app.post("/api/otp/validate", authJwt.verifyToken, controller.otpValidate);
   app.post("/api/otp/disable", authJwt.verifyToken, controller.otpDisable);
+  app.post("/api/otp/validate", controller.otpValidate);
 };

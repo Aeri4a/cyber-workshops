@@ -43,19 +43,26 @@ exports.login = async (req, res) => {
         .status(401)
         .send({ accessToken: null, message: "Invalid password!", code: 0 });
 
-    //Generate Token if login ok
-    const token = jwt.sign(
-      { id: user.id, username: user.username },
-      config.secret,
-      {
-        expiresIn: 1800, // 30 min
-      }
-    );
+    //Check if otp is active
+    if (user.twoStepStatus) {
+      res
+        .status(206)
+        .send({ userName: user.name, message: "Waiting to check OTP." });
+    } else {
+      //Generate Token if login ok and otp disabled
+      const token = jwt.sign(
+        { id: user.id, username: user.username },
+        config.secret,
+        {
+          expiresIn: 1800, // 30 min
+        }
+      );
 
-    res.status(200).send({
-      accessToken: token,
-      code: 1,
-    });
+      res.status(200).send({
+        accessToken: token,
+        code: 1,
+      });
+    }
   } catch (error) {
     res.status(500).send({ message: error.message, code: 0 });
   }
@@ -67,8 +74,8 @@ exports.otpGenerate = async (req, res) => {
   try {
     const { userId, userName } = req;
     const { ascii, hex, base32, otpauth_url } = speakeasy.generateSecret({
-      issuer: "Cybero",
-      name: userName,
+      issuer: userName,
+      name: "Cybero",
       length: 15,
     });
 
@@ -129,12 +136,10 @@ exports.otpVerify = async (req, res) => {
 //Validate OTP
 exports.otpValidate = async (req, res) => {
   try {
-    const { userId, userName } = req;
-    const { token } = req.body;
+    const { userName, token } = req.body;
 
     const user = await User.findOne({
       where: {
-        id: userId,
         username: userName,
       },
     });
@@ -147,11 +152,20 @@ exports.otpValidate = async (req, res) => {
       token,
     });
 
-    if (!verified) return res.status(401).send({ message: "Fail." });
+    if (!verified) return res.status(401).send({ message: "Wrong token!" });
 
-    res.status(200).send({ otpValid: true });
+    //Generate Token if login ok and otp disabled
+    const actoken = jwt.sign(
+      { id: user.id, username: user.username },
+      config.secret,
+      {
+        expiresIn: 1800, // 30 min
+      }
+    );
+
+    res.status(200).send({ otpValid: true, accessToken: actoken, code: 1 });
   } catch (error) {
-    res.status(500).send({ message: error.message });
+    res.status(500).send({ message: error.message, code: 0 });
   }
 };
 

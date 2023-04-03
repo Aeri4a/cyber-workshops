@@ -18,37 +18,38 @@ import "react-toastify/dist/ReactToastify.css";
 function Profile() {
   const navigate = useNavigate();
   const [data, setData] = useState({});
-  const [modal, setModal] = useState(0);
-  const [genotp, setGenotp] = useState();
+  //const [modal, setModal] = useState(0);
+  const [genotp, setGenotp] = useState({ modal: 0 });
+  const [refresh, setRefresh] = useState(0);
 
-  //TODO - Rebuild functions, not reload page
   const generateOTP = () => {
     OTPService.generate()
       .then((response) => {
-        setGenotp(response.data);
+        QRCode.toDataURL(response.data.otpauth_url).then((data) => {
+          setGenotp({ modal: 1, ...response.data, qrcode: data });
+        });
       })
       .catch((error) => {
         console.log("Fail while generate", error.response);
       });
-
-    if (genotp) {
-      QRCode.toDataURL(genotp.otpauth_url).then((data) => {
-        setGenotp({ ...genotp, qrcode: data });
-      });
-    }
-    setModal(1);
   };
 
   const tokenInput = (e) => {
     setGenotp({ ...genotp, token: e.target.value });
   };
 
-  const confirmOTP = async () => {
-    await OTPService.verify(genotp.token)
+  const confirmOTP = () => {
+    OTPService.verify(genotp.token)
       .then((response) => {
         if (response.data.otpVerified) {
           console.log(response.data.otpVerified);
           toast.success("Success! 2FA has been enabled!");
+
+          setTimeout(() => {
+            setGenotp({ ...genotp, modal: 0 });
+          }, 2000);
+
+          getData();
         }
       })
       .catch((error) => {
@@ -56,11 +57,22 @@ function Profile() {
       });
   };
 
-  const closeModal = () => {
-    setModal(0);
+  const disableOTP = () => {
+    OTPService.disable()
+      .then((respone) => {
+        toast.success("2FA deactivated.");
+        getData();
+      })
+      .catch((error) => {
+        toast.error("Fail to deactivate 2FA!");
+      });
   };
 
-  useEffect(() => {
+  const closeModal = () => {
+    setGenotp({ ...genotp, modal: 0 });
+  };
+
+  const getData = () => {
     AccessService.getUserContent()
       .then((response) => {
         setData(response.data);
@@ -74,6 +86,10 @@ function Profile() {
           window.location.reload();
         }
       });
+  };
+
+  useEffect(() => {
+    getData();
   }, []);
 
   return (
@@ -89,7 +105,9 @@ function Profile() {
           <h3 className={styles.tileHeader}>Two-Factor Authentication</h3>
           <p className={styles.paragh}>
             {data.otpEnabled ? (
-              <button className={styles.otpbtn}>Disable 2FA</button>
+              <button className={styles.otpbtn} onClick={disableOTP}>
+                Disable 2FA
+              </button>
             ) : (
               <button className={styles.otpbtn} onClick={generateOTP}>
                 Enable 2FA
@@ -98,7 +116,7 @@ function Profile() {
           </p>
         </div>
       </div>
-      {modal ? (
+      {genotp.modal ? (
         <OTPmodal
           actionClose={closeModal}
           actionConfirm={confirmOTP}

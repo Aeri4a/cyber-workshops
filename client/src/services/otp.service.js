@@ -7,12 +7,17 @@ class OTPService {
   generate() {
     return axios.post(`${URL}generate`, {}, { headers: authHeader() });
   }
+
   verify(tokenValue) {
     return axios.post(
       `${URL}verify`,
       { token: tokenValue },
       { headers: authHeader() }
     );
+  }
+
+  disable() {
+    return axios.post(`${URL}disable`, {}, { headers: authHeader() });
   }
 }
 

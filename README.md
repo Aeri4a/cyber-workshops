@@ -10,8 +10,9 @@ Main recipients: **students**
 
 - Register
 - Login
-- Activate/deactivate Two-Step Authentication
 - User panel
+- JWT Token
+- Activate/deactivate Two-Step Authentication
 
 ## Technologies
 

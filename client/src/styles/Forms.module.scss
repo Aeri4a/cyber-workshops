@@ -76,14 +76,14 @@ input:invalid[focused="true"] ~ span {
   border: 0;
   border-radius: 5px;
   color: white;
-  background-color: #2cb3cb;
+  background-color: #11dbae;
   font-size: 30px;
   cursor: pointer;
   font-family: "Quicksand", sans-serif;
   font-weight: 600;
 
   &:hover {
-    background-color: #24a1b7;
+    background-color: #10c099;
     transition: 0.3s;
   }
 }

@@ -1,6 +1,7 @@
 import axios from "axios";
+import { ipdata } from "../configS";
 
-const URL = "http://localhost:3001/api/auth/";
+const URL = `${ipdata.ipadress}:8080/api/auth/`;
 
 class AuthService {
   register(username, password) {

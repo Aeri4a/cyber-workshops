@@ -1,7 +1,8 @@
 import axios from "axios";
 import authHeader from "./auth-header";
+import { ipdata } from "../configS";
 
-const URL = "http://localhost:3001/api/access/";
+const URL = `${ipdata.ipadress}:8080/api/access/`;
 
 class AccessService {
   getAllContent() {

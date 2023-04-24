@@ -67,14 +67,14 @@
   border: 0;
   border-radius: 5px;
   color: white;
-  background-color: #2cb3cb;
+  background-color: #11dbae;
   font-size: 30px;
   cursor: pointer;
   font-family: "Quicksand", sans-serif;
   font-weight: 600;
 
   &:hover {
-    background-color: #24a1b7;
+    background-color: #10c099;
     transition: 0.3s;
   }
 }
@@ -92,5 +92,35 @@
   &::placeholder {
     font-size: 15px;
     text-transform: uppercase;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .window {
+    width: 260px;
+    height: 600px;
+  }
+
+  .window > * {
+    font-size: 20px;
+  }
+
+  .line {
+    width: 200px;
+  }
+
+  .key {
+    font-size: 15px;
+    width: 240px;
+    height: 200px;
+  }
+
+  .input {
+    width: 50%;
+  }
+
+  .button {
+    font-size: 20px;
+    margin: 7px;
   }
 }

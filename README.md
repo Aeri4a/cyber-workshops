@@ -20,3 +20,7 @@ Main recipients: **students**
 - NodeJS
 - Sequelize
 - MySQL
+
+## HTTP/HTTPS
+
+To use HTTPS create own self-signed certificate and place it in server/ssl folder and also in client/ssl.
